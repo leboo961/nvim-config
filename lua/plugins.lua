@@ -156,6 +156,22 @@ local lazy_plugins = {
         on_attach = on_attach,
         capabilities = capabilities,
       })
+            
+      -- Configure MATLAB Language Server
+      lspconfig.matlab_ls.setup({
+        -- cmd = { 'matlab-language-server', '--stdio' }, -- Command to start the server
+        cmd = { 'matlab-ls', '--stdio' }, -- Command to start the server
+        filetypes = { 'matlab' },                      -- File types it should attach to
+        root_dir = lspconfig.util.root_pattern('.project', '.git', 'MATLAB_PROJECT', 'project.m'), -- How to detect project root
+        settings = {
+          matlab = {
+            telemetry = {
+              enabled = false, -- Disable telemetry if desired
+              },
+            -- Add any other specific MATLAB LSP settings here if needed
+          },
+        },
+      })
 
       -- Initial setup for LSP diagnostics and nvim-cmp (remains in config.lsp)
       lsp_config_module.setup_diagnostics_and_cmp()
